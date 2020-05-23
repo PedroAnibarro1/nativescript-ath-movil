@@ -1,0 +1,2 @@
+platform :ios, '10.0'
+pod 'athmovil-checkout', :git => 'https://github.com/PedroAnibarro1/athmovil-ios-sdk.git'
