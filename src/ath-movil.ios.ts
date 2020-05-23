@@ -107,18 +107,3 @@ class AMDelegate extends NSObject implements AMCheckoutDelegate {
     }
 
 }
-
-
-// export class ATHMovilButton {
-//     native: any;
-//     style: AMButtonStyle;
-//     language: AMLanguage;
-
-//     constructor(style: AMButtonStyle = AMButtonStyle.original, language: AMLanguage = AMLanguage.english) {
-//         this.style = style;
-//         this.language = language;
-
-//         this.native = ATHMCheckout.shared.getCheckoutButtonWithTargetAction(topmost, "");
-
-//     }
-// }

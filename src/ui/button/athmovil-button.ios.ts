@@ -30,7 +30,7 @@ export class AMButton extends AMButtonBase {
      */
     public createNativeView(): Object {
         // Create new instance
-        const button = ATHMCheckout.shared.getCheckoutButtonWithTargetAction(topmost, "tap");;
+        const button = ATHMCheckout.shared.getCheckoutButtonWithTargetAction(topmost, "tap");
 
         // Set the handler as callback function.
         button.addTargetActionForControlEvents(handler, "tap", UIControlEvents.TouchUpInside);
