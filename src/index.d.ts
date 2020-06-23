@@ -63,9 +63,9 @@ export declare class AMPayment {
 }
 
 export declare interface AMTransactionListener {
-  onCompletePayment(): void;
-  onCancelledPayment(): void;
-  onExpiredPayment(): void;
+  onCompletePayment(referenceNumber: string): void;
+  onCancelledPayment(referenceNumber: string): void;
+  onExpiredPayment(referenceNumber: string): void;
 }
 
 export class AMTransactionSession {

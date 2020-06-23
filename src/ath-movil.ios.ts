@@ -93,17 +93,17 @@ class AMDelegate extends NSObject implements AMCheckoutDelegate {
 
     onCompletedPaymentWithReferenceNumberTotalTaxSubtotalMetadata1Metadata2Items(referenceNumber: string, total: number, tax: number, subtotal: number, metadata1: string, metadata2: string, items: NSArray<ATHMPaymentItem> | ATHMPaymentItem[]) {
         console.log("Completed transaction ATH MOVIL");
-        this.listener.onCompletePayment();
+        this.listener.onCompletePayment(referenceNumber);
     }
 
     onCancelledPaymentWithReferenceNumberTotalTaxSubtotalMetadata1Metadata2Items(referenceNumber: string, total: number, tax: number, subtotal: number, metadata1: string, metadata2: string, items: NSArray<ATHMPaymentItem> | ATHMPaymentItem[]): void {
         console.log("Cancelled transaction ATH MOVIL");
-        this.listener.onCancelledPayment();
+        this.listener.onCancelledPayment(referenceNumber);
     }
 
     onExpiredPaymentWithReferenceNumberTotalTaxSubtotalMetadata1Metadata2Items(referenceNumber: string, total: number, tax: number, subtotal: number, metadata1: string, metadata2: string, items: NSArray<ATHMPaymentItem> | ATHMPaymentItem[]): void {
         console.log("Expired transaction ATH MOVIL");
-        this.listener.onExpiredPayment();
+        this.listener.onExpiredPayment(referenceNumber);
     }
 
 }
