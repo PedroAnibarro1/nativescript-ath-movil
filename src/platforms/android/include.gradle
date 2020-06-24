@@ -1,11 +1,20 @@
 /* Include.gradle configuration: http://docs.nativescript.org/plugins/plugins#includegradle-specification */
 
 android {
-	
+
+}
+
+repositories {
+    maven {
+        url 'https://jitpack.io'
+    }
 }
 
 dependencies {
     // Describe plugin native Android dependencies like
-	// implementation "groupName:pluginName:ver" 
-    // EXAMPLE: implementation "com.facebook.fresco:fresco:0.9.0+"
+    // implementation "groupName:pluginName:ver" 
+    // EXAMPLE: implementation "com.facebook.fresco:fresco:0.9.0+"    
+    implementation 'com.github.evertec:athmovil-android-sdk:2.0.0'
+    implementation 'com.google.code.gson:gson:2.8.2'
+
 }
