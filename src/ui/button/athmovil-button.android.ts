@@ -1,39 +1,62 @@
 import { AMButtonBase } from "./athmovil-button.common";
 export * from "./athmovil-button.common";
-import { topmost } from 'tns-core-modules/ui/frame';
 
-// class that handles all native 'tap' callbacks
-class TapHandler extends NSObject {
+let clickListener: android.view.View.OnClickListener;
 
-    public tap(nativeButton: UIButton, nativeEvent: _UIEvent) {
-        // Gets the owner from the nativeView.
-        const owner: AMButton = (<any>nativeButton).owner;
-        if (owner) {
-            owner.notify({ eventName: AMButtonBase.tapEvent, object: owner });
+// NOTE: ClickListenerImpl is in function instead of directly in the module because we 
+// want this file to be compatible with V8 snapshot. When V8 snapshot is created
+// JS is loaded into memory, compiled & saved as binary file which is later loaded by
+// Android runtime. Thus when snapshot is created we don't have Android runtime and
+// we don't have access to native types.
+function initializeClickListener(): void {
+    // Define ClickListener class only once.
+    if (clickListener) {
+        return;
+    }
+
+    // Interfaces decorator with implemented interfaces on this class
+    @Interfaces([android.view.View.OnClickListener])
+    class ClickListener extends java.lang.Object implements android.view.View.OnClickListener {
+        public owner: AMButton;
+
+        constructor() {
+            super();
+            // Required by Android runtime when native class is extended through TypeScript.
+            return global.__native(this);
+        }
+
+        public onClick(v: android.view.View): void {
+            // When native button is clicked we raise 'tap' event.
+            const owner = (<any>v).owner;
+            if (owner) {
+                owner.notify({ eventName: AMButtonBase.tapEvent, object: owner });
+            }
         }
     }
 
-    public static ObjCExposedMethods = {
-        "tap": { returns: interop.types.void, params: [interop.types.id, interop.types.id] }
-    };
+    clickListener = new ClickListener();
 }
 
-const handler = TapHandler.new();
 
 export class AMButton extends AMButtonBase {
 
     // added for TypeScript intellisense.
-    nativeView: UIButton;
+    nativeView: android.widget.Button;
 
     /**
      * Creates new native button.
      */
     public createNativeView(): Object {
-        // Create new instance
-        const button = ATHMCheckout.shared.getCheckoutButtonWithTargetAction(topmost, "tap");
+        // Initialize ClickListener.
+        initializeClickListener();
 
-        // Set the handler as callback function.
-        button.addTargetActionForControlEvents(handler, "tap", UIControlEvents.TouchUpInside);
+        // Create new instance of android.widget.Button.
+        const button: any = new com.evertecinc.athmovil.sdk.checkout.PayButton(this._context);
+        button.setLanguage(com.evertecinc.athmovil.sdk.checkout.PayButton.ButtonLanguage.EN)
+        button.setTheme(com.evertecinc.athmovil.sdk.checkout.PayButton.ButtonTheme.ORIGINAL);
+
+        // set onClickListener on the nativeView.
+        button.setOnClickListener(clickListener);
 
         return button;
     }
@@ -55,7 +78,7 @@ export class AMButton extends AMButtonBase {
      * so that it could be reused later.
      */
     disposeNativeView(): void {
-        // Remove reference from native listener to this instance.
+        // Remove reference from native view to this instance.
         (<any>this.nativeView).owner = null;
 
         // If you want to recycle nativeView and have modified the nativeView 

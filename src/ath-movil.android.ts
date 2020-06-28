@@ -1,6 +1,7 @@
 import { Common, AMButtonStyle, AMLanguage, AMEnvironment as AMDevEnvironment, AMPaymentItem, AMPayment, AMTransactionListener } from './ath-movil.common';
 import { android as androidApp } from "tns-core-modules/application";
 export * from './ath-movil.common';
+import * as utils from "tns-core-modules/utils/utils";
 
 type ATHMItem = com.evertecinc.athmovil.sdk.checkout.objects.Items;
 
@@ -28,7 +29,7 @@ export class ATHMovil extends Common {
     static configureFor(environment: AMDevEnvironment, publicToken: string, callbackURL: string) {
         
         let instance = this.getInstance();
-        instance.athmPayment = new com.evertecinc.athmovil.sdk.checkout.objects.ATHMPayment(androidApp.context);
+        instance.athmPayment = new com.evertecinc.athmovil.sdk.checkout.objects.ATHMPayment(utils.ad.getApplicationContext());
         instance.athmPayment.setPublicToken(publicToken);
         instance.athmPayment.setCallbackSchema(callbackURL);
                
