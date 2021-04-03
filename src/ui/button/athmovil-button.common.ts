@@ -9,4 +9,4 @@ export abstract class AMButtonBase extends View implements ButtonDefinition {
 // If set to true - nativeView will be kept in memory and reused when some other instance 
 // of type MyButtonBase needs nativeView. Set to true only if you are sure that you can reset the
 // nativeView to its initial state. When true will improve application performance. 
-AMButtonBase.prototype.recycleNativeView = "auto"; 
+// AMButtonBase.prototype.recycleNativeView = "auto"; 
