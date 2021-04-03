@@ -1,4 +1,4 @@
-import { View, Style, Property, CssProperty, EventData } from "tns-core-modules/ui/core/view";
+import { View, Style, Property, CssProperty, EventData } from "@nativescript/core";
 
 export class AMButton extends View {
     // static field used from component-builder module to find events on controls.

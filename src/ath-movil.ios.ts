@@ -77,7 +77,7 @@ export class AMTransactionSession {
 
 }
 
-
+@NativeClass()
 class AMDelegate extends NSObject implements AMCheckoutDelegate {
     static ObjCProtocols = [AMCheckoutDelegate];
 

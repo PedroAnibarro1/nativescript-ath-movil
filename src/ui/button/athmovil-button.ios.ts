@@ -1,8 +1,9 @@
 import { AMButtonBase } from "./athmovil-button.common";
 export * from "./athmovil-button.common";
-import { topmost } from 'tns-core-modules/ui/frame';
+import { Frame } from '@nativescript/core';
 
 // class that handles all native 'tap' callbacks
+@NativeClass()
 class TapHandler extends NSObject {
 
     public tap(nativeButton: UIButton, nativeEvent: _UIEvent) {
@@ -30,7 +31,7 @@ export class AMButton extends AMButtonBase {
      */
     public createNativeView(): Object {
         // Create new instance
-        const button = ATHMCheckout.shared.getCheckoutButtonWithTargetAction(topmost, "tap");
+        const button = ATHMCheckout.shared.getCheckoutButtonWithTargetAction(Frame.topmost(), "tap");
 
         // Set the handler as callback function.
         button.addTargetActionForControlEvents(handler, "tap", UIControlEvents.TouchUpInside);
