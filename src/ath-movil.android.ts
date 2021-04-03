@@ -52,6 +52,7 @@ export class ATHMovil extends Common {
         instance.athmPayment.setMetadata1(payment.metadata1);
         instance.athmPayment.setMetadata2(payment.metadata2);
         instance.athmPayment.setItems(this.getNativeItemsFrom(payment.items));
+        instance.athmPayment.setBuildType("");
 
         try {
             com.evertecinc.athmovil.sdk.checkout.OpenATHM.validateData(instance.athmPayment)
@@ -90,7 +91,7 @@ export class AMTransactionSession {
 
 }
 
-class AMDelegateActivity extends androidx.appcompat.app.AppCompatActivity implements com.evertecinc.athmovil.sdk.checkout.interfaces.PaymentResponseListener, android.view.View.OnClickListener {
+export class AMDelegateActivity extends androidx.appcompat.app.AppCompatActivity implements com.evertecinc.athmovil.sdk.checkout.interfaces.PaymentResponseListener, android.view.View.OnClickListener {
 
     private delegate: AMTransactionListener = ATHMovil.getInstance().delegate;
 
@@ -98,6 +99,7 @@ class AMDelegateActivity extends androidx.appcompat.app.AppCompatActivity implem
         this.delegate.onCompletePayment(param0);
     }
     public onCancelledPayment(param0: string, param1: java.lang.Double, param2: java.lang.Double, param3: java.lang.Double, param4: string, param5: string, param6: java.util.ArrayList<com.evertecinc.athmovil.sdk.checkout.objects.Items>): void {
+        console.log("cancelled in plugin");
         this.delegate.onCancelledPayment(param0);
     }
     public onExpiredPayment(param0: string, param1: java.lang.Double, param2: java.lang.Double, param3: java.lang.Double, param4: string, param5: string, param6: java.util.ArrayList<com.evertecinc.athmovil.sdk.checkout.objects.Items>): void {

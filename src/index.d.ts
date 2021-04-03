@@ -7,9 +7,12 @@ export declare class ATHMovil extends Common {
   // or..
   // take the ios or android .d.ts files and copy/paste them here
 
+  delegate: AMTransactionListener;
+
   static configureFor(environment: AMDevEnvironment, publicToken: string, callbackURL: string): boolean
   static handleIncomingURL(url: NSURL): boolean
   static checkout(payment: AMPayment): boolean
+  static getInstance(): ATHMovil
 
 }
 
@@ -71,4 +74,14 @@ export declare interface AMTransactionListener {
 export class AMTransactionSession {
   private delegate: AMDelegate;
   constructor(listener: AMTransactionListener);
+}
+
+export class AMDelegateActivity extends androidx.appcompat.app.AppCompatActivity implements com.evertecinc.athmovil.sdk.checkout.interfaces.PaymentResponseListener, android.view.View.OnClickListener {
+
+  private delegate: AMTransactionListener = ATHMovil.getInstance().delegate;
+
+  public onCompletedPayment(param0: string, param1: java.lang.Double, param2: java.lang.Double, param3: java.lang.Double, param4: string, param5: string, param6: java.util.ArrayList<com.evertecinc.athmovil.sdk.checkout.objects.Items>): void;
+  public onCancelledPayment(param0: string, param1: java.lang.Double, param2: java.lang.Double, param3: java.lang.Double, param4: string, param5: string, param6: java.util.ArrayList<com.evertecinc.athmovil.sdk.checkout.objects.Items>): void;
+  public onExpiredPayment(param0: string, param1: java.lang.Double, param2: java.lang.Double, param3: java.lang.Double, param4: string, param5: string, param6: java.util.ArrayList<com.evertecinc.athmovil.sdk.checkout.objects.Items>): void;
+  public onClick(param0: globalAndroid.view.View): void;
 }
